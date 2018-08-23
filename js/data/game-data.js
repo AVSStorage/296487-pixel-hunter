@@ -1,8 +1,14 @@
-export const INITIAL_GAME = Object.freeze({
+const INITIAL_GAME = Object.freeze({
   level: 0,
-  lives: 2,
+  lives: 0,
   time: 0
 });
+
+const ANSWERS_COUNT = 10;
+const TIME_POINT = 50;
+const ANSWER_POINT = 100;
+const LIVE_POINT = 50;
+const LIVES_COUNT = 3;
 
 const changeLevel = (game, level) => {
   if (typeof level !== `number`) {
@@ -20,17 +26,17 @@ const changeLevel = (game, level) => {
 };
 
 const countPoints = (answers, lifes) => {
-  if (answers.length < 10 || answers.length > 10) {
+  if (answers.length < ANSWERS_COUNT || answers.length > ANSWERS_COUNT) {
     throw new Error(`There are should be ten answers`);
   } else {
     const points = answers.map((answer) => {
       let newPoint = 0;
       if (answer.value) {
-        newPoint = newPoint + 100;
+        newPoint = newPoint + ANSWER_POINT;
         if (answer.time === `fast`) {
-          newPoint = newPoint + 50;
+          newPoint = newPoint + TIME_POINT;
         } else if (answer.time === `slow`) {
-          newPoint = newPoint - 50;
+          newPoint = newPoint - TIME_POINT;
         }
       }
       return newPoint;
@@ -38,10 +44,28 @@ const countPoints = (answers, lifes) => {
 
     let totalPoints = points.reduce((currentPoint, nextPoint) => currentPoint + nextPoint);
     if (lifes) {
-      totalPoints = totalPoints + lifes * 50;
+      totalPoints = totalPoints + lifes * LIVE_POINT;
     }
     return totalPoints;
   }
 };
 
-export {changeLevel, countPoints};
+const manageLives = (game, lives) => {
+  if (typeof lives !== `number`) {
+    throw new Error(`Lives should be of type number`);
+  }
+
+  if (lives > LIVES_COUNT) {
+    throw new Error(`There are should not be more than three values`);
+  }
+  if (lives < 0) {
+    throw new Error(`There are should not be negative values`);
+  }
+
+  const newGame = Object.assign({}, game, {
+    lives
+  });
+  return newGame;
+};
+
+export {changeLevel, countPoints, INITIAL_GAME, manageLives};

@@ -1,13 +1,5 @@
 import {assert} from 'chai';
-import {changeLevel, countPoints, INITIAL_GAME} from './game-data';
-describe(`Array`, () => {
-  describe(`#indexOf()`, () => {
-    it(`should return -1 when the value is not present`, () => {
-      assert.equal(-1, [1, 2, 3].indexOf(4));
-    });
-  });
-});
-
+import {changeLevel, countPoints, INITIAL_GAME, manageLives} from './game-data';
 
 describe(`Check level changer`, () => {
 
@@ -274,6 +266,28 @@ describe(`Counting total points`, () => {
             time: `slow`
           }
         ], undefined), 800);
+  });
+
+});
+
+describe(`Manage game lives`, () => {
+
+  it(`should update lives`, () => {
+    assert.equal(manageLives(INITIAL_GAME, 1).lives, 1);
+    assert.equal(manageLives(INITIAL_GAME, 2).lives, 2);
+    assert.equal(manageLives(INITIAL_GAME, 3).lives, 3);
+  });
+
+  it(`should not allow set negative values`, () => {
+    assert.throws(() => manageLives(INITIAL_GAME, -1).lives, Error);
+  });
+
+  it(`should not be more then three values`, () => {
+    assert.throws(() => manageLives(INITIAL_GAME, 4).lives, Error);
+  });
+
+  it(`should not allow set non number value`, () => {
+    assert.throws(() => manageLives(INITIAL_GAME, []).lives, Error);
   });
 
 });
