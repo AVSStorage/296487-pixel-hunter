@@ -14,6 +14,23 @@ const svgstore = require(`gulp-svgstore`);
 const rollup = require(`gulp-better-rollup`);
 const sourcemaps = require(`gulp-sourcemaps`);
 
+const mocha = require(`gulp-mocha`);
+const commonjs = require(`rollup-plugin-commonjs`);
+
+
+gulp.task(`test`, function () {
+  return gulp
+  .src([`js/**/*.test.js`])
+  .pipe(rollup({
+    plugins: [
+      commonjs()
+    ]}, `cjs`))
+  .pipe(gulp.dest(`build/test`))
+  .pipe(mocha({
+    reporter: `spec`
+  }));
+});
+
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
     pipe(plumber()).
@@ -111,7 +128,4 @@ gulp.task(`assemble`, [`clean`], () => {
 
 gulp.task(`build`, [`assemble`], () => {
   gulp.start(`imagemin`);
-});
-
-gulp.task(`test`, () => {
 });
