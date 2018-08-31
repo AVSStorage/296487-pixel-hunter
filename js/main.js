@@ -1,5 +1,5 @@
-import {changeScreen} from './util';
-import mainScreen from './main-screen';
+import {getElementFromTemplate} from './util';
+import {mainScreenTemplate} from './game/quest';
+import {renderGreetingScreen} from './game/quest-logic';
 
-changeScreen(mainScreen);
-
+renderGreetingScreen(getElementFromTemplate(mainScreenTemplate));

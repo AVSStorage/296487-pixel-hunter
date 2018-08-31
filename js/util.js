@@ -13,4 +13,4 @@ const getElementFromTemplate = (html) => {
 };
 
 
-export {changeScreen, getElementFromTemplate};
+export {changeScreen, getElementFromTemplate, mainElement};
