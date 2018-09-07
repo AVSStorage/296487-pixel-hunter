@@ -59,14 +59,4 @@ export default class HeaderView extends AbstractView {
       this.goPreviousScreen();
     });
   }
-  onExitGame() {
-
-  }
-  goPreviousScreen() {
-  //   if (!this._data) {
-  //   console.log(`Не игровой экран`)
-  // }
-    this.onExitGame();
-
-  }
 }

@@ -1,49 +1,37 @@
-
-import {changeScreen, mainElement} from './util';
-import {levels, initialState} from './game/quest';
-
-
-import WelcomeView from './welcome/welcome-view';
-import RulesView from './rules/rules-view';
-import LevelView from './game/level-view';
+import {changeScreen} from './util';
+import WelcomeScreen from './welcome/welcome-screen';
+import RulesScreen from './rules/rules-screen';
+import GameScreen from './game/game-screen';
+import StatsView from './stats/stats-view';
 
 
-import {LEVELS_COUNT, renderHeader} from './settings.js';
+export default class Application {
 
-const welcomeScreen = new WelcomeView();
-welcomeScreen.goNextScreen = () => {
+  static start() {
+    const greetingScreen = new WelcomeScreen();
+    changeScreen(greetingScreen.element);
+  }
 
-  const rulesScreen = new RulesView();
-  rulesScreen.goNextScreen = () => {
-    startGame();
+  static showRules() {
+    const rulesScreen = new RulesScreen();
+    changeScreen(rulesScreen.element);
+  }
 
-  };
-  changeScreen(rulesScreen.element);
+  static showGame() {
 
-};
-mainElement.appendChild(welcomeScreen.element);
+    const gameScreen = new GameScreen();
+    gameScreen.startGame();
+    changeScreen(gameScreen.element);
+  }
 
+  static finish(state) {
+    Application.showResult(state);
+  }
 
-const startGame = () => {
-  let newGame = Object.assign({}, initialState);
-  const levelView = new LevelView(levels[newGame.level]);
-  const levelScreen = document.createElement(`div`);
-  levelScreen.appendChild(renderHeader(newGame).element);
-  levelScreen.appendChild(levelView.element);
+  static showResult(results) {
+    const resultScreen = new StatsView(results);
+    changeScreen(resultScreen.element);
+  }
+}
 
-  changeScreen(levelScreen);
-  levelView.onAnswer = (answer, game) => {
-    if (answer) {
-      game.answers.push(`correct`);
-
-    } else {
-      game.answers.push(`wrong`);
-    }
-    if ((!(game.lives < 0) && !answer) && !(game.level === LEVELS_COUNT)) {
-      game.lives -= 1;
-
-    }
-
-
-  };
-};
+Application.start();

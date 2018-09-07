@@ -1,7 +1,8 @@
-const LEVELS_COUNT = 9;
+const LEVELS_COUNT = 10;
 const BONUS_POINTS = 50;
 const ANSWER_POINTS = 100;
 const REQUIRED_ANSWERS_COUNT = 2;
+const LIVES_COUNT = 3;
 import HeaderView from './header/header-view';
 import WelcomeView from './welcome/welcome-view';
 import {changeScreen} from './util';
@@ -14,4 +15,4 @@ const renderHeader = (game) => {
   return header;
 };
 
-export {LEVELS_COUNT, BONUS_POINTS, ANSWER_POINTS, REQUIRED_ANSWERS_COUNT, renderHeader};
+export {LEVELS_COUNT, BONUS_POINTS, ANSWER_POINTS, REQUIRED_ANSWERS_COUNT, renderHeader, LIVES_COUNT};

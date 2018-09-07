@@ -1,47 +1,11 @@
 import AbstractView from '../abstract-view';
 import renderStats from '../stats/stats-render';
-import StatsView from '../stats/stats-view';
-import {changeScreen} from '../util';
-import {levels, gameStats, initialState} from './quest';
-
-import {LEVELS_COUNT, BONUS_POINTS, ANSWER_POINTS, REQUIRED_ANSWERS_COUNT, renderHeader} from '../settings.js';
-const nextScreen = (game) => {
-  if (game.lives >= 0 && !(game.level === LEVELS_COUNT)) {
-    game.level += 1;
-    const gameLevel = new LevelView(levels[game.level]);
-    const gameScreen = document.createElement(`div`);
-    gameScreen.appendChild(renderHeader(game).element);
-    gameScreen.appendChild(gameLevel.element);
-    changeScreen(gameScreen);
-    return gameLevel;
-  } else {
-    const states = countStatsValues(game.answers);
-    changeScreen(new StatsView(...states).element);
-    return ``;
-  }
-
-};
-
-const countStatsValues = (answers) => {
-  let stats = Object.assign({}, gameStats);
-  const points = answers.filter((answer) => answer === `correct`).length;
-  stats.correctPoints = points * ANSWER_POINTS;
-
-  if (game.lives >= 0) {
-    stats.livesBonus = game.lives;
-    stats.totalPoints = stats.correctPoints + stats.livesBonus * BONUS_POINTS + stats.fastBonus * BONUS_POINTS - stats.slowBonus * 50;
-  } else {
-    stats = Object.assign({}, gameStats);
-  }
-
-  return [stats, answers];
-
-};
-let game = Object.assign({}, initialState);
 
 
-export default class LevelView extends AbstractView {
-  constructor(level) {
+import {REQUIRED_ANSWERS_COUNT} from '../settings.js';
+
+export default class GameView extends AbstractView {
+  constructor(level, game) {
     super();
     this._level = level;
     this._game = game;
@@ -70,10 +34,7 @@ export default class LevelView extends AbstractView {
   }
 
   onAnswer() { }
-  onClick() {
-    const newLevelScreen = nextScreen(this._game);
-    newLevelScreen.onAnswer = this.onAnswer;
-  }
+
   bind() {
     const gameForm = this.element.querySelector(`.game__content`);
     const radioButtons = Array.from(gameForm.querySelectorAll(`input`));
@@ -96,8 +57,7 @@ export default class LevelView extends AbstractView {
         correctAnswer = false;
       }
 
-      this.onAnswer(correctAnswer, this._game);
-      this.onClick();
+      this.onAnswer(correctAnswer);
 
       return correctAnswer;
     });
@@ -117,8 +77,7 @@ export default class LevelView extends AbstractView {
       });
 
 
-      this.onAnswer(correctAnswer, this._game);
-      this.onClick();
+      this.onAnswer(correctAnswer);
 
     });
 

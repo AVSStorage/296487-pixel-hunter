@@ -1,9 +1,12 @@
 
 const getStatItem = (answer) => {
+
   let status = `unknown`;
 
   if (answer) {
-    status = answer;
+    status = `correct`;
+  } else if (answer === false) {
+    status = `wrong`;
   }
 
 
