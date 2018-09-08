@@ -17,7 +17,7 @@ export default class HeaderScreen {
   }
 
   goPreviousScreen() {
-    Application.start();
+    Application.renderWelcomeScreen();
 
   }
 }

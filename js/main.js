@@ -3,11 +3,17 @@ import WelcomeScreen from './welcome/welcome-screen';
 import RulesScreen from './rules/rules-screen';
 import GameScreen from './game/game-screen';
 import StatsView from './stats/stats-view';
+import IntroScreen from './intro/intro-screen';
 
 
 export default class Application {
 
   static start() {
+    const introScreen = new IntroScreen();
+    changeScreen(introScreen.element);
+  }
+
+  static renderWelcomeScreen() {
     const greetingScreen = new WelcomeScreen();
     changeScreen(greetingScreen.element);
   }
