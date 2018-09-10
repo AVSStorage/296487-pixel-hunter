@@ -2,28 +2,9 @@ const initialState = {
   level: 0,
   lives: 3,
   time: 0,
+  answers: []
 };
 
-const welcomeTemplateData = {
-  title: `Лучшие художники-фотореалисты бросают тебе вызов!`,
-  description: [`Нужно отличить рисунок от фотографии и сделать выбор.`, `Задача кажется тривиальной, но не думай, что все так просто.`, `Фотореализм обманчив и коварен.`, `Помни, главное — смотреть очень внимательно.`]
-};
-
-const rulesTemplateData = {
-  title: `Правила`,
-  setDescription() {
-    return `<li>Угадай 10 раз для каждого изображения фото
-    <img class="rules__icon" src="${this.images.photo}" width="32" height="31" alt="Фото"> или рисунок
-    <img class="rules__icon" src="${this.images.paint}" width="32" height="31" alt="Рисунок"></li>
-  <li>Фотографиями или рисунками могут быть оба изображения.</li>
-  <li>На каждую попытку отводится 30 секунд.</li>
-  <li>Ошибиться можно не более 3 раз.</li>`;
-  },
-  images: {
-    photo: `img/icon-photo.png`,
-    paint: `img/icon-paint.png`
-  }
-};
 
 const levels = [
   {
@@ -227,10 +208,4 @@ const gameStats = {
   totalPoints: 0
 };
 
-const mainScreenTemplate =
-  `<section class="intro">
-  <button class="intro__asterisk asterisk" type="button"><span class="visually-hidden">Продолжить</span>*</button>
-  <p class="intro__motto"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>
-  </section>`;
-
-export {levels, rulesTemplateData, welcomeTemplateData, initialState, gameStats, mainScreenTemplate};
+export {levels, initialState, gameStats};
