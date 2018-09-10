@@ -5,8 +5,8 @@ import {levels} from './quest';
 import Application from '../main';
 
 export default class GameScreen {
-  constructor(data) {
-    this._model = new GameModel(data);
+  constructor() {
+    this._model = new GameModel();
   }
 
   get element() {
@@ -18,7 +18,7 @@ export default class GameScreen {
     this._model.init();
 
     this._root = document.createElement(`div`);
-    this._header = new HeaderScreen(this._model.state);
+    this._header = new HeaderScreen(this._model.state, this.stopTimer.bind(this));
     this._root.appendChild(this._header.element);
 
     this.updateGameData();
@@ -33,7 +33,10 @@ export default class GameScreen {
   }
 
   updateGameData() {
+    this._model.nextQuestion();
 
+    this.runTimer();
+    this.updateTime();
     this.updateLives();
 
     const game = new GameView(levels[this._model.state.level], this._model.state);
@@ -53,7 +56,23 @@ export default class GameScreen {
     Application.finish(this._model);
   }
 
+  runTimer() {
+    this._interval = setInterval(() => {
+      if (this._model.tick().done) {
+        this.onAnswer(false);
+      }
+
+      this.updateTime();
+    }, 1000);
+  }
+
+  stopTimer() {
+    clearInterval(this._interval);
+  }
+
+
   onAnswer(answer) {
+    this.stopTimer();
     this._model.addAnswerType(answer);
     this._model.state.level += 1;
 

@@ -1,11 +1,13 @@
 import HeaderView from './header-view';
 import Application from '../main';
+import ConfirmScreen from '../confirm/confirm-screen';
 
 export default class HeaderScreen {
-  constructor(data) {
+  constructor(data, stopTimer) {
     this._data = data;
     this._view = new HeaderView(data);
     this._view.goPreviousScreen = this.goPreviousScreen.bind(this);
+    this._stopTimer = stopTimer;
   }
 
   get element() {
@@ -17,7 +19,17 @@ export default class HeaderScreen {
   }
 
   goPreviousScreen() {
-    Application.renderWelcomeScreen();
+    if (!this._data) {
+      Application.renderWelcomeScreen();
+    }
+
+    const confirm = new ConfirmScreen();
+    confirm.isOk = () => {
+      Application.start();
+      if (this._data) {
+        this._stopTimer();
+      }
+    };
 
   }
 }
