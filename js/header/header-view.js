@@ -1,4 +1,5 @@
 import AbstractView from '../abstract-view';
+
 const renderContentWithData = ({time, lives}) => {
   return `<h1 class='game__timer'>${time}</h1>
           <div class='game__lives'>

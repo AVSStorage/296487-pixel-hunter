@@ -1,16 +1,12 @@
 import AbstractView from '../abstract-view';
 import renderStats from '../stats/stats-render';
 import renderAnswers from './answers/answers';
-const QuestionType = {
-  GUESS_TWO: `two-of-two`,
-  GUESS_ONE: `tinder-like`,
-  FIND: `one-of-three`
-};
-import {REQUIRED_ANSWERS_COUNT} from '../settings.js';
+import {REQUIRED_ANSWERS_COUNT, QuestionType} from '../settings.js';
 const ContentType = {
   [QuestionType.GUESS_ONE]: `game__content--wide`,
   [QuestionType.FIND]: `game__content--triple`
 };
+
 export default class GameView extends AbstractView {
   constructor(level, game) {
     super();
@@ -44,13 +40,14 @@ export default class GameView extends AbstractView {
       if (option.querySelector(`.game__answer`)) {
         return false;
       }
+      
       if (option.classList.contains(`game__option--selected`)) {
         correctAnswer = true;
       } else {
         correctAnswer = false;
       }
-      this.onAnswer(correctAnswer);
 
+      this.onAnswer(correctAnswer);
       return correctAnswer;
     });
 
@@ -58,6 +55,7 @@ export default class GameView extends AbstractView {
       const checkedAnswerControls = radioButtons.filter((radio) => {
         return radio.checked;
       });
+
 
       if (!checkedAnswerControls.length || ((this._level.answers.length === REQUIRED_ANSWERS_COUNT)
           && checkedAnswerControls.length !== REQUIRED_ANSWERS_COUNT)) {
@@ -67,7 +65,7 @@ export default class GameView extends AbstractView {
       correctAnswer = this._level.answers.every((answer, i) => {
         return answer.type === checkedAnswerControls[i].value;
       });
-
+      
       this.onAnswer(correctAnswer);
 
     });

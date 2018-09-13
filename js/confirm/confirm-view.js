@@ -1,9 +1,12 @@
 import AbstractView from '../abstract-view';
+
 const Action = {
   OK: `Ок`,
   CANCEL: `Отмена`
 };
+
 export default class ConfirmView extends AbstractView {
+  
   get template() {
     return `  <section class="modal">
         <form class="modal__inner">
@@ -19,6 +22,7 @@ export default class ConfirmView extends AbstractView {
         </form>
       </section>`;
   }
+  
   bind() {
     this.element.querySelector(`form`).addEventListener(`click`, (evt) => {
       evt.preventDefault();
@@ -36,7 +40,9 @@ export default class ConfirmView extends AbstractView {
     });
   }
   onOk() {
+
   }
   onCancel() {
+
   }
 }

@@ -13,7 +13,6 @@ const getStatItem = ({answerType, time} = {}) => {
   } else if (answerType === false) {
     status = `wrong`;
   }
-
   return `<li class='stats__result stats__result--${status}'></li>`;
 };
 

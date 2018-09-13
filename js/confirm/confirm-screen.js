@@ -11,6 +11,7 @@ export default class ConfirmScreen {
     this.isOk();
     this.close();
   }
+
   onCancel() {
     this.close();
   }

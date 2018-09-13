@@ -8,7 +8,7 @@ export default class GameScreen {
     this._data = data;
     this._model = new GameModel(data);
   }
-
+  
   get element() {
     return this._root;
   }
@@ -68,9 +68,10 @@ export default class GameScreen {
     Application.finish(this._model._state, this._model._playerName);
   }
 
+
   onAnswer(answer) {
-    this._model.addAnswerType(answer);
     this.stopTimer();
+    this._model.addAnswerType(answer);
     this._model.state.level += 1;
 
     if ((!this._model.isDead() && !answer) && this._model.isLastQuestion()) {
