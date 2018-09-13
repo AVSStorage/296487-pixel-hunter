@@ -8,7 +8,7 @@ export default class GameScreen {
     this._data = data;
     this._model = new GameModel(data);
   }
-  
+
   get element() {
     return this._root;
   }

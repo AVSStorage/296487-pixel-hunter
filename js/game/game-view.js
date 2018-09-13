@@ -40,7 +40,7 @@ export default class GameView extends AbstractView {
       if (option.querySelector(`.game__answer`)) {
         return false;
       }
-      
+
       if (option.classList.contains(`game__option--selected`)) {
         correctAnswer = true;
       } else {
@@ -65,7 +65,7 @@ export default class GameView extends AbstractView {
       correctAnswer = this._level.answers.every((answer, i) => {
         return answer.type === checkedAnswerControls[i].value;
       });
-      
+
       this.onAnswer(correctAnswer);
 
     });

@@ -30,11 +30,11 @@ export default class GameModel {
     this.resetTime();
     createTimer(this._state.time);
   }
-  
+
   isLastQuestion() {
     return this._state.level === LEVELS_COUNT;
   }
-  
+
   addAnswerType(answer) {
     this._state = Object.assign({}, this._state, {
       answers: [...this._state.answers, {'answerType': answer, 'time': Time.START - this._state.time}],
