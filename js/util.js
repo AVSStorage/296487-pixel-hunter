@@ -12,5 +12,4 @@ const getElementFromTemplate = (html) => {
   return element;
 };
 
-
 export {changeScreen, getElementFromTemplate, mainElement};

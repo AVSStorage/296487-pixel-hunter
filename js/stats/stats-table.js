@@ -21,7 +21,7 @@ export default class StatsTableView extends AbstractView {
     });
 
     this._isWin = (answers.length - this._correctAnswers.length) <= LIVES_COUNT;
-    this._totalScore = this._correctAnswers * GamePoints.ANSWER_POINT + this._fastAnswers * GamePoints.BONUS_POINT - this._slowAnswers * GamePoints.BONUS_POINT + this._lives * GamePoints.BONUS_POINT;
+    this._totalScore = this._correctAnswers.length * GamePoints.ANSWER_POINT + this._fastAnswers.length * GamePoints.BONUS_POINT - this._slowAnswers.length * GamePoints.BONUS_POINT + this._lives * GamePoints.BONUS_POINT;
   }
 
   get template() {

@@ -20,7 +20,8 @@ export default class HeaderScreen {
 
   goPreviousScreen() {
     if (!this._data) {
-      Application.showWelcomeScreen();
+      Application.start();
+      return;
     }
     const confirm = new ConfirmScreen();
     confirm.isOk = () => {

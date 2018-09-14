@@ -2,7 +2,7 @@ import adaptServerData from './game/adapter';
 import resize from './resize/resize';
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
-const DEFAULT_NAME = `nekki`;
+const DEFAULT_NAME = `user`;
 const APP_ID = 22101985;
 
 const checkStatus = (response) => {

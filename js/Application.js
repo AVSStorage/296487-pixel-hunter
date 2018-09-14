@@ -6,33 +6,26 @@ import StatsScreen from './stats/stats-screen';
 import IntroScreen from './intro/intro-screen';
 import ErrorScreen from './error/eror-screen';
 import Loader from './loader';
-// import SplashScreen from './js/splash/splash-screen.js';
+import LoadScreen from './load/load-screen';
 
 let questData;
 
 export default class Application {
+  static async start() {
+    const  welcomeScreen = new WelcomeScreen();
 
-  static start() {
-    //  const splash = new SplashScreen();
-    // changeScreen(splash.element);
-    // splash.start();
-    Loader.loadData().
-        then((data) => {
-          questData = data;
-        }).
-        then(() => Application.showIntro()).
-        catch(Application.showError);
-    // then(() => splash.stop());
-  }
-
-  static showIntro() {
-    const introScreen = new IntroScreen();
-    changeScreen(introScreen.element);
-  }
-
-  static showWelcomeScreen() {
-    const welcomeScreen = new WelcomeScreen();
-    changeScreen(welcomeScreen.element);
+    if (!questData) {
+      const introScreen = new IntroScreen();
+      changeScreen(introScreen.element);
+      try {
+        questData = await Loader.loadData();
+        changeScreen(welcomeScreen.element);
+      } catch (e) {
+        Application.showError(e);
+      }
+    } else {
+      changeScreen(welcomeScreen.element);
+    }
   }
 
   static showRules() {
@@ -40,20 +33,37 @@ export default class Application {
     changeScreen(rulesScreen.element);
   }
 
+  static showResultPreloader() {
+    const loadScreen = new LoadScreen();
+    changeScreen(loadScreen.element);
+}
+
   static showGame(playerName) {
     const gameScreen = new GameScreen({questData, playerName});
     gameScreen.startGame();
     changeScreen(gameScreen.element);
   }
 
-  static finish(state, playerName) {
-    Application.showResult(state, playerName);
+  static showWelcomeScreen(){
+    const welcomeScreen = new WelcomeScreen();
+    changeScreen(welcomeScreen.element)
   }
 
-  static showResult(state, playerName) {
-    Loader.saveResults(state, playerName).
-     then(() => Loader.loadResults(playerName)).
-     then((data) => changeScreen(new StatsScreen(data, playerName).element));
+  static async finish(state, playerName) {
+
+    Application.showResultPreloader();
+
+    try {
+      await Loader.saveResults(state, playerName);
+      const results = await Loader.loadResults(playerName);
+      Application.showResult(results, playerName);
+    } catch (error) {
+      Application.showError(error);
+    }
+  }
+
+  static showResult(data, playerName) {
+    changeScreen(new StatsScreen(data, playerName).element)
   }
 
   static showError(error) {
