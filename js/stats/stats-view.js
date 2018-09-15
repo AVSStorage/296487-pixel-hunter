@@ -1,31 +1,42 @@
 import AbstractView from '../abstract-view';
-import HeaderScreen from '../header/header-screen';
-import WelcomeView from '../welcome/welcome-view';
-import {checkAnswers} from './stats-answers';
-
-import {changeScreen} from '../util';
+import StatsTableView from './stats-table';
+import {LIVES_COUNT} from '../settings';
 
 
-export default class StatsView extends AbstractView {
-  constructor(stats) {
+const resultToTitle = {
+  [true]: `Победа!`,
+  [false]: `Поражение.`
+};
+
+export default class ResultView extends AbstractView {
+  constructor(results, player) {
     super();
-    this._stats = stats.state;
-    this._answerType = stats.state.answers;
+    this._player = player;
+    this._results = results.reverse();
   }
 
   get template() {
-    return `
-        ${checkAnswers(this._answerType, this._stats.lives)}
-      `;
+    return `<div class='result'>
+              <h1>${resultToTitle[this.isWin()]}</h1>
+              ${this.renderResultTables()}
+            </div>`;
   }
 
-  bind() {
-    const header = new HeaderScreen();
-    header.onExitGame = () => {
-      const welcomeScreen = new WelcomeView();
-      changeScreen(welcomeScreen.element);
-    };
-    this.element.insertBefore(header.element, this.element.firstChild);
+  isWin() {
+    const wrongAnswers = this._results[0].answers.filter((answer) => {
+      return answer.answerType === false;
+    });
+
+    return wrongAnswers.length <= LIVES_COUNT;
   }
 
+  renderResultTables() {
+    let resultTables = ``;
+
+    this._results.forEach((result, i) => {
+      resultTables += new StatsTableView(result, i + 1).template;
+    });
+
+    return resultTables;
+  }
 }

@@ -1,8 +1,11 @@
 import AbstractView from '../abstract-view';
 import renderStats from '../stats/stats-render';
-
-
-import {REQUIRED_ANSWERS_COUNT} from '../settings.js';
+import renderAnswers from './answers/answers';
+import {REQUIRED_ANSWERS_COUNT, QuestionType} from '../settings.js';
+const ContentType = {
+  [QuestionType.GUESS_ONE]: `game__content--wide`,
+  [QuestionType.FIND]: `game__content--triple`
+};
 
 export default class GameView extends AbstractView {
   constructor(level, game) {
@@ -13,19 +16,10 @@ export default class GameView extends AbstractView {
   }
 
   get template() {
-    return `<section class="game">
+    return `<section class="game" >
       <p class="game__task">${this._level.title}</p>
-      <form class="game__content game__content--${this._level.className}">
-      ${this._level.question.map((it) => `<div class="game__option">
-          <img src="${it.image}" alt="${it.imageAlt}" width="${this._level.imageWidth}" height="${this._level.imageHeight}">
-          ${this._level.question.length < 3 ? `  <label class="game__answer game__answer--photo">
-                  <input class="visually-hidden" name="${it.name}" type="radio" value="photo">
-                  <span>Фото</span>
-                </label>
-                <label class="game__answer game__answer--paint">
-                  <input class="visually-hidden" name="${it.name}" type="radio" value="paint">
-                  <span>Рисунок</span>  </label>` : ``}
-        </div>`).join(``)}
+      <form class="game__content ${ContentType[this._level.type] || ``}">
+     ${renderAnswers(this._level)}
         </form>
        <ul class="stats">
           ${renderStats(this._game.answers)}
@@ -47,18 +41,13 @@ export default class GameView extends AbstractView {
         return false;
       }
 
-      let answers = this._level.question.find((it) =>
-        (option.querySelector(`img`).alt === it.imageAlt) && it.answer
-      );
-
-      if (answers) {
+      if (option.classList.contains(`game__option--selected`)) {
         correctAnswer = true;
       } else {
         correctAnswer = false;
       }
 
       this.onAnswer(correctAnswer);
-
       return correctAnswer;
     });
 
@@ -67,15 +56,15 @@ export default class GameView extends AbstractView {
         return radio.checked;
       });
 
-      if (!checkedAnswerControls.length || ((this._level.question.length === REQUIRED_ANSWERS_COUNT)
+
+      if (!checkedAnswerControls.length || ((this._level.answers.length === REQUIRED_ANSWERS_COUNT)
           && checkedAnswerControls.length !== REQUIRED_ANSWERS_COUNT)) {
         return;
       }
 
-      correctAnswer = this._level.question.every((answer, i) => {
-        return answer.answer === checkedAnswerControls[i].value;
+      correctAnswer = this._level.answers.every((answer, i) => {
+        return answer.type === checkedAnswerControls[i].value;
       });
-
 
       this.onAnswer(correctAnswer);
 

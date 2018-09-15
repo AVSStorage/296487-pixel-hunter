@@ -1,12 +1,12 @@
 import GameModel from './game-model';
 import GameView from './game-view';
 import HeaderScreen from '../header/header-screen';
-import {levels} from './quest';
-import Application from '../main';
+import Application from '../Application';
 
 export default class GameScreen {
-  constructor() {
-    this._model = new GameModel();
+  constructor(data) {
+    this._data = data;
+    this._model = new GameModel(data);
   }
 
   get element() {
@@ -32,14 +32,26 @@ export default class GameScreen {
     this._header.view.changeLives(this._model.state);
   }
 
+  runTimer() {
+    this._interval = setInterval(() => {
+      if (this._model.tick().done) {
+        this.onAnswer(false);
+      }
+      this.updateTime();
+    }, 1000);
+  }
+  stopTimer() {
+    clearInterval(this._interval);
+  }
+
+
   updateGameData() {
     this._model.nextQuestion();
-
+    this.updateLives();
     this.runTimer();
     this.updateTime();
-    this.updateLives();
 
-    const game = new GameView(levels[this._model.state.level], this._model.state);
+    const game = new GameView(this._data.questData[this._model.state.level], this._model.state);
     const gameElement = game.element;
 
     if (this._game) {
@@ -53,21 +65,7 @@ export default class GameScreen {
   }
 
   finishGame() {
-    Application.finish(this._model);
-  }
-
-  runTimer() {
-    this._interval = setInterval(() => {
-      if (this._model.tick().done) {
-        this.onAnswer(false);
-      }
-
-      this.updateTime();
-    }, 1000);
-  }
-
-  stopTimer() {
-    clearInterval(this._interval);
+    Application.finish(this._model._state, this._model._playerName);
   }
 
 

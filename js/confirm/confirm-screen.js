@@ -1,5 +1,4 @@
 import ConfirmView from './confirm-view';
-
 export default class ConfirmScreen {
   constructor() {
     this._view = new ConfirmView();
@@ -8,7 +7,6 @@ export default class ConfirmScreen {
     this._element = this._view.element;
     document.body.appendChild(this._element);
   }
-
   onOk() {
     this.isOk();
     this.close();
@@ -17,12 +15,9 @@ export default class ConfirmScreen {
   onCancel() {
     this.close();
   }
-
   close() {
     document.body.removeChild(this._element);
   }
-
   isOk() {
-
   }
 }

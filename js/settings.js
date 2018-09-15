@@ -1,18 +1,39 @@
 const LEVELS_COUNT = 10;
-const BONUS_POINTS = 50;
-const ANSWER_POINTS = 100;
 const REQUIRED_ANSWERS_COUNT = 2;
 const LIVES_COUNT = 3;
-import HeaderView from './header/header-view';
-import WelcomeView from './welcome/welcome-view';
-import {changeScreen} from './util';
-const renderHeader = (game) => {
-  const header = new HeaderView(game);
-  header.onExitGame = () => {
-    changeScreen(new WelcomeView().element);
 
-  };
-  return header;
+const GamePoints = {
+  BONUS_POINT: 50,
+  ANSWER_POINT: 100
 };
 
-export {LEVELS_COUNT, BONUS_POINTS, ANSWER_POINTS, REQUIRED_ANSWERS_COUNT, renderHeader, LIVES_COUNT};
+const AnswerType = {
+  PHOTO: `photo`,
+  PAINT: `paint`
+};
+const Time = {
+  START: 30,
+  CRITICAL: 5,
+  FREQUENCY: 1000
+};
+
+const AnswerTime = {
+  SLOW: 20,
+  FAST: 10
+};
+
+const initialState = {
+  level: 0,
+  lives: LIVES_COUNT,
+  time: Time.START,
+  answers: []
+};
+
+const QuestionType = {
+  GUESS_TWO: `two-of-two`,
+  GUESS_ONE: `tinder-like`,
+  FIND: `one-of-three`
+};
+
+
+export {LEVELS_COUNT, GamePoints, REQUIRED_ANSWERS_COUNT, AnswerType, QuestionType, LIVES_COUNT, Time, AnswerTime, initialState};

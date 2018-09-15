@@ -1,5 +1,5 @@
 import HeaderView from './header-view';
-import Application from '../main';
+import Application from '../Application';
 import ConfirmScreen from '../confirm/confirm-screen';
 
 export default class HeaderScreen {
@@ -20,9 +20,9 @@ export default class HeaderScreen {
 
   goPreviousScreen() {
     if (!this._data) {
-      Application.renderWelcomeScreen();
+      Application.start();
+      return;
     }
-
     const confirm = new ConfirmScreen();
     confirm.isOk = () => {
       Application.start();

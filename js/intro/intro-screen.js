@@ -1,10 +1,10 @@
 import IntroView from './intro-view';
-import Application from '../main';
+import Application from '../Application';
 export default class IntroScreen {
   constructor() {
     this._view = new IntroView();
     this._view.goNextScreen = () => {
-      Application.renderWelcomeScreen();
+      Application.showWelcomeScreen();
     };
   }
 

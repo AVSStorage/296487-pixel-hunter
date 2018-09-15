@@ -49,12 +49,6 @@ export default class HeaderView extends AbstractView {
   }
 
   changeTime({time}) {
-    if (time <= 3000) {
-      this._timer.classList.add(`game__timer--critical`);
-    } else {
-      this._timer.classList.remove(`game__timer--critical`);
-    }
-
     this._timer.textContent = time;
   }
 

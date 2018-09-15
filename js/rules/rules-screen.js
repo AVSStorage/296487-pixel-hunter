@@ -1,12 +1,12 @@
 import RulesView from './rules-view';
 import HeaderScreen from '../header/header-screen';
-import Application from '../main';
+import Application from '../Application';
 
 export default class RulesScreen {
   constructor() {
     this._view = new RulesView();
-    this._view.goNextScreen = (name) => {
-      Application.showGame(name);
+    this._view.goNextScreen = (playerName) => {
+      Application.showGame(playerName);
     };
   }
 

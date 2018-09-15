@@ -34,18 +34,14 @@ export default class ConfirmView extends AbstractView {
       if (action === Action.OK) {
         this.onOk();
       }
-
       if (action === Action.CANCEL) {
         this.onCancel();
       }
     });
-
   }
-
   onOk() {
 
   }
-
   onCancel() {
 
   }
