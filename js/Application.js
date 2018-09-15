@@ -11,8 +11,9 @@ import LoadScreen from './load/load-screen';
 let questData;
 
 export default class Application {
+
   static async start() {
-    const  welcomeScreen = new WelcomeScreen();
+    const welcomeScreen = new WelcomeScreen();
 
     if (!questData) {
       const introScreen = new IntroScreen();
@@ -36,7 +37,7 @@ export default class Application {
   static showResultPreloader() {
     const loadScreen = new LoadScreen();
     changeScreen(loadScreen.element);
-}
+  }
 
   static showGame(playerName) {
     const gameScreen = new GameScreen({questData, playerName});
@@ -44,9 +45,9 @@ export default class Application {
     changeScreen(gameScreen.element);
   }
 
-  static showWelcomeScreen(){
+  static showWelcomeScreen() {
     const welcomeScreen = new WelcomeScreen();
-    changeScreen(welcomeScreen.element)
+    changeScreen(welcomeScreen.element);
   }
 
   static async finish(state, playerName) {
@@ -63,7 +64,7 @@ export default class Application {
   }
 
   static showResult(data, playerName) {
-    changeScreen(new StatsScreen(data, playerName).element)
+    changeScreen(new StatsScreen(data, playerName).element);
   }
 
   static showError(error) {
