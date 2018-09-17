@@ -1,8 +1,8 @@
 import {AnswerTime, LEVELS_COUNT} from '../settings';
-const getStatItem = ({answerTypes, time} = {}) => {
+const getStatItem = ({answerType, time} = {}) => {
   let status = `unknown`;
 
-  if (answerTypes) {
+  if (answerType) {
     status = `correct`;
     if (time < AnswerTime.FAST) {
       status = `fast`;
@@ -10,7 +10,7 @@ const getStatItem = ({answerTypes, time} = {}) => {
       status = `slow`;
     }
 
-  } else if (answerTypes === false) {
+  } else if (answerType === false) {
     status = `wrong`;
   }
   return `<li class='stats__result stats__result--${status}'></li>`;

@@ -4,7 +4,7 @@ export default class IntroScreen {
   constructor() {
     this._view = new IntroView();
     this._view.goNextScreen = () => {
-      Application.showWelcomeScreen();
+      Application.showResultPreloader();
     };
   }
 
