@@ -6,7 +6,6 @@ const INITIAL_GAME = Object.freeze({
 
 const ANSWERS_COUNT = 10;
 const TIME_POINT = 50;
-const ANSWER_POINT = 100;
 const LIVE_POINT = 50;
 const LIVES_COUNT = 3;
 
@@ -31,21 +30,20 @@ const countPoints = (answers, lifes) => {
   } else {
     const points = answers.map((answer) => {
       let newPoint = 0;
-      if (answer.value) {
-        newPoint = newPoint + ANSWER_POINT;
-        if (answer.time === `fast`) {
-          newPoint = newPoint + TIME_POINT;
-        } else if (answer.time === `slow`) {
-          newPoint = newPoint - TIME_POINT;
-        }
+      if (answer.value && answer.time) {
+        return answer.time === `fast` ?
+          newPoint + TIME_POINT :
+          newPoint - TIME_POINT;
       }
       return newPoint;
     });
 
     let totalPoints = points.reduce((currentPoint, nextPoint) => currentPoint + nextPoint);
+
     if (lifes) {
       totalPoints = totalPoints + lifes * LIVE_POINT;
     }
+
     return totalPoints;
   }
 };

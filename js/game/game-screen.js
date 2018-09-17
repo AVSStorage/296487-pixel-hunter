@@ -50,7 +50,6 @@ export default class GameScreen {
     this.updateLives();
     this.runTimer();
     this.updateTime();
-
     const game = new GameView(this._data.questData[this._model.state.level], this._model.state);
     const gameElement = game.element;
 

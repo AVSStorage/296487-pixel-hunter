@@ -102,11 +102,11 @@ describe(`Counting total points`, () => {
           },
           {
             value: true,
-            time: null
+            time: `fast`
           },
           {
             value: false,
-            time: null
+            time: `slow`
           },
           {
             value: true,
@@ -114,11 +114,11 @@ describe(`Counting total points`, () => {
           },
           {
             value: false,
-            time: null
+            time: `fast`
           },
           {
             value: false,
-            time: null
+            time: `fast`
           },
           {
             value: true,
@@ -126,13 +126,13 @@ describe(`Counting total points`, () => {
           },
           {
             value: false,
-            time: null
+            time: `slow`
           },
           {
             value: false,
-            time: null
+            time: `slow`
           }
-        ], 1), 650);
+        ], 1), 200);
     assert.equal(
         countPoints([
           {
@@ -175,7 +175,7 @@ describe(`Counting total points`, () => {
             value: true,
             time: null
           }
-        ], 3), 1150);
+        ], 3), 150);
     assert.equal(
         countPoints([
           {
@@ -218,7 +218,7 @@ describe(`Counting total points`, () => {
             value: false,
             time: `slow`
           }
-        ], 0), 700);
+        ], 0), 0);
 
 
   });
@@ -265,7 +265,7 @@ describe(`Counting total points`, () => {
             value: false,
             time: `slow`
           }
-        ], undefined), 800);
+        ], undefined), 100);
   });
 
 });
