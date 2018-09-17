@@ -30,7 +30,7 @@ const countPoints = (answers, lifes) => {
   } else {
     const points = answers.map((answer) => {
       let newPoint = 0;
-      if (answer.value) {
+      if (answer.value && answer.time) {
         return answer.time === `fast` ?
           newPoint + TIME_POINT :
           newPoint - TIME_POINT;
@@ -39,9 +39,11 @@ const countPoints = (answers, lifes) => {
     });
 
     let totalPoints = points.reduce((currentPoint, nextPoint) => currentPoint + nextPoint);
+
     if (lifes) {
       totalPoints = totalPoints + lifes * LIVE_POINT;
     }
+
     return totalPoints;
   }
 };
